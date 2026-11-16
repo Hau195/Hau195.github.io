@@ -1,0 +1,539 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Hau Le Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Noto+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: multi-tab personal site. Top bar with menu, banner with name, then one view at a time (Home, Resume, Projects, About & Contact). */
+:root {
+  --bg: #F4F6F5;
+  --surface: #FFFFFF;
+  --fg: #14211D;
+  --muted: #53665F;
+  --line: #D6E0DB;
+  --line-strong: #9FB3AB;
+  --accent: #0A6B5B;
+  --accent-ink: #FFFFFF;
+  --soft: #E2F0EA;
+  --art-bg: #EAF2EF;
+  --art-2: #C2501A;
+  --banner-fg: #FFFFFF;
+  --display: "Montserrat", "Noto Sans", system-ui, sans-serif;
+  --body: "Noto Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0C1411; --surface: #121D19; --fg: #E4EEE9; --muted: #9DB2AA; --line: #24342E; --line-strong: #46605A;
+    --accent: #4FD1B0; --accent-ink: #06241D; --soft: #16302A; --art-bg: #0F1A17; --art-2: #F0A35E;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0C1411; --surface: #121D19; --fg: #E4EEE9; --muted: #9DB2AA; --line: #24342E; --line-strong: #46605A;
+  --accent: #4FD1B0; --accent-ink: #06241D; --soft: #16302A; --art-bg: #0F1A17; --art-2: #F0A35E;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--body); font-size: 16px; line-height: 1.65;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 56px;
+}
+.wrap { max-width: 1040px; margin: 0 auto; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--display); }
+
+/* top bar */
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; position: relative; border-bottom: 1px solid var(--line); }
+.brand { font: 800 18px var(--display); letter-spacing: -.01em; color: var(--fg); text-decoration: none; }
+.menu-btn { display: none; align-items: center; gap: 8px; font: 700 13px var(--display); letter-spacing: .06em; text-transform: uppercase; padding: 10px 16px; border: 0; border-radius: 6px; background: var(--accent); color: var(--accent-ink); cursor: pointer; }
+.nav { display: flex; gap: 6px; }
+.nav a { font: 600 14px var(--display); letter-spacing: .02em; color: var(--fg); text-decoration: none; padding: 8px 14px; border-radius: 6px; }
+.nav a:hover { background: var(--soft); }
+.nav a[aria-current="page"] { color: var(--accent); background: var(--soft); }
+
+/* banner */
+.banner { position: relative; overflow: hidden; border-radius: 0 0 10px 10px; background: linear-gradient(135deg, #082A25 0%, #0E4A3F 100%); color: var(--banner-fg); min-height: 280px; display: grid; place-items: center; text-align: center; padding: 48px 20px; }
+.banner svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.banner svg path { fill: none; stroke: #6EE7C8; stroke-opacity: .32; stroke-width: 2; stroke-linejoin: round; }
+.banner svg circle { fill: #082A25; stroke: #6EE7C8; stroke-opacity: .5; stroke-width: 2; }
+.banner-text { position: relative; }
+.banner .sub { font: 700 16px var(--display); letter-spacing: .02em; margin: 0 0 8px; opacity: .92; }
+.banner h1 { font-weight: 800; font-size: clamp(44px, 9vw, 76px); line-height: 1.02; letter-spacing: -.02em; margin: 0; }
+
+/* views */
+.view { padding-block: 48px 0; }
+.page-title { font-weight: 800; font-size: clamp(34px, 6vw, 52px); line-height: 1.05; text-align: center; margin: 0 0 18px; letter-spacing: -.02em; }
+.lead { text-align: center; max-width: 40em; margin: 0 auto; font-size: 18px; }
+.rule { height: 1px; background: var(--line); border: 0; margin: 56px 0 0; }
+h2.sec { font-weight: 800; font-size: 30px; text-align: center; margin: 56px 0 28px; letter-spacing: -.01em; }
+h3.sub-h { font-weight: 700; font-size: 22px; margin: 0 0 10px; }
+
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 48px; max-width: 760px; margin: 40px auto 0; }
+.two ul, ul.pts { margin: 0; padding-left: 1.15em; display: grid; gap: 8px; }
+.two li::marker, ul.pts li::marker { color: var(--accent); }
+
+/* experience cards */
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.xcard { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px; }
+.mono-tile { width: 64px; height: 64px; display: grid; place-items: center; border-radius: 8px; background: var(--soft); color: var(--accent); font: 800 18px var(--display); letter-spacing: -.02em; }
+.xcard .when { font: 500 12px var(--mono); color: var(--muted); letter-spacing: .02em; margin: 0 0 4px; }
+.xcard h3 { font: 700 17px/1.3 var(--display); margin: 0 0 2px; }
+.xcard .org { margin: 0 0 8px; color: var(--muted); font-size: 14px; }
+.xcard p.d { margin: 0 0 8px; font-size: 15px; }
+
+.btn { display: inline-flex; align-items: center; gap: 8px; font: 700 13px var(--display); letter-spacing: .04em; text-transform: uppercase; padding: 11px 20px; border-radius: 6px; text-decoration: none; cursor: pointer; border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); }
+.btn:hover { filter: brightness(1.08); }
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn.ghost:hover { background: var(--soft); filter: none; }
+.center { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 28px; }
+.readmore { font: 700 13px var(--display); text-decoration: none; letter-spacing: .02em; }
+
+/* project grid */
+.pgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.pcard { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; text-decoration: none; color: var(--fg); transition: border-color .15s, transform .15s; }
+.pcard:hover { border-color: var(--accent); transform: translateY(-2px); }
+.pcard .art { aspect-ratio: 5 / 3; background: var(--art-bg); border-bottom: 1px solid var(--line); }
+.pcard .body { padding: 14px 16px 16px; }
+.cat { font: 500 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 0 0 4px; }
+.pcard h3 { font: 700 17px/1.3 var(--display); margin: 0 0 6px; }
+.pcard p.s { margin: 0; font-size: 14px; color: var(--muted); }
+.art svg { display: block; width: 100%; height: 100%; }
+.art img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.art img.top { object-position: center 38%; }
+.detail-art img { object-fit: contain; background: var(--art-bg); }
+.art .bg { fill: var(--art-bg); }
+.art .ln { stroke: var(--line-strong); fill: none; stroke-width: 1.5; }
+.art .ac { stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; }
+.art .acd { stroke: var(--accent); fill: none; stroke-width: 1.6; stroke-dasharray: 5 4; }
+.art .fa { fill: var(--accent); }
+.art .box { fill: var(--surface); stroke: var(--line-strong); stroke-width: 1.5; }
+.art .t { font: 500 10px var(--mono); fill: var(--fg); }
+.art .tm { font: 400 9px var(--mono); fill: var(--muted); }
+.art .ti { font: 500 10px var(--mono); fill: var(--accent-ink); }
+
+/* project detail */
+.back { display: inline-block; margin-bottom: 18px; font: 700 13px var(--display); text-decoration: none; }
+.detail-art { aspect-ratio: 5 / 3; max-height: 420px; width: 100%; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--art-bg); }
+.detail { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+.detail h1 { font-weight: 800; font-size: clamp(28px, 4.5vw, 40px); line-height: 1.1; margin: 0 0 8px; letter-spacing: -.02em; }
+.meta { color: var(--muted); font-size: 14px; margin: 0 0 18px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 0; padding: 0; list-style: none; }
+.tags li { font: 500 12px var(--mono); padding: 3px 9px; border-radius: 4px; background: var(--soft); }
+
+/* resume */
+.rs { max-width: 800px; margin: 0 auto; }
+.rs h2 { font: 700 13px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin: 44px 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.item { margin-bottom: 26px; }
+.item-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 20px; align-items: baseline; }
+.item h3 { font: 700 17px/1.3 var(--display); margin: 0; }
+.item .when { font: 500 13px var(--mono); color: var(--muted); }
+.item .org { color: var(--muted); margin: 0 0 8px; font-size: 15px; }
+.skills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 32px; }
+.skills h3 { font: 500 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 4px; }
+.skills p { margin: 0; font-size: 15px; }
+
+/* about + contact */
+.about { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 24px; }
+.panel h2 { font: 700 20px var(--display); margin: 0 0 12px; }
+.contact-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 14px; }
+.email { font: 500 14px var(--mono); overflow-wrap: anywhere; user-select: all; }
+.links { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 8px; }
+
+footer { margin-top: 64px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+
+@media (max-width: 860px) {
+  .menu-btn { display: inline-flex; }
+  .nav { display: none; position: absolute; left: 0; right: 0; top: 100%; z-index: 5; flex-direction: column; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 0 0 8px 8px; }
+  .nav.open { display: flex; }
+  .nav a { padding: 14px 16px; border-radius: 0; border-bottom: 1px solid var(--line); text-align: right; }
+  .nav a:last-child { border-bottom: 0; }
+  .cards, .two, .detail, .about { grid-template-columns: minmax(0, 1fr); }
+  .pgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .skills { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 560px) {
+  .pgrid { grid-template-columns: minmax(0, 1fr); }
+  .view { padding-block: 36px 0; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .pcard { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header class="bar">
+    <a class="brand" href="#home">Hau Le</a>
+    <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#home" data-view="home">Home</a>
+      <a href="#resume" data-view="resume">Resume</a>
+      <a href="#projects" data-view="projects">Projects</a>
+      <a href="#about" data-view="about">About &amp; Contact</a>
+    </nav>
+  </header>
+
+  <div class="banner">
+    <svg viewBox="0 0 1000 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+      <path d="M0 60 H180 L220 100 H420 L460 60 H700 L740 100 H1000"/>
+      <path d="M0 140 H120 L160 180 H360 L400 140 H620 L660 180 H1000"/>
+      <path d="M0 230 H260 L300 270 H540 L580 230 H820 L860 270 H1000"/>
+      <path d="M300 0 V60 L340 100 V200 L380 240 V300"/>
+      <path d="M820 0 V90 L780 130 V210 L820 250 V300"/>
+      <circle cx="180" cy="60" r="7"/><circle cx="420" cy="100" r="7"/><circle cx="700" cy="60" r="7"/>
+      <circle cx="120" cy="140" r="7"/><circle cx="620" cy="180" r="7"/><circle cx="260" cy="230" r="7"/>
+      <circle cx="540" cy="270" r="7"/><circle cx="820" cy="230" r="7"/><circle cx="340" cy="100" r="7"/>
+    </svg>
+    <div class="banner-text">
+      <p class="sub">Embedded Systems Portfolio</p>
+      <h1>Hau Le</h1>
+    </div>
+  </div>
+
+  <!-- HOME -->
+  <main>
+  <section class="view" id="view-home" hidden>
+    <h2 class="page-title">Summary</h2>
+    <p class="lead">I build firmware and the hardware-facing software around it: communication stacks, drivers, test automation and bench debugging. I am finishing an M.S. in Software Engineering at Kennesaw State University.</p>
+    <div class="two">
+      <div>
+        <h3 class="sub-h">What I build</h3>
+        <ul>
+          <li>Firmware and drivers in C on STM32 and ESP32.</li>
+          <li>Distributed controller networks over RS-485, CAN and Wi-Fi.</li>
+          <li>Test automation with Python, GDB and Jenkins.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="sub-h">How I debug</h3>
+        <ul>
+          <li>Board bring-up with oscilloscope, logic analyzer and multimeter.</li>
+          <li>Bus root-cause analysis with CANoe.</li>
+          <li>Automated debugging with Python and GDB.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 class="sec">Experience</h2>
+    <div class="cards">
+      <article class="xcard">
+        <div class="mono-tile">FPT</div>
+        <div>
+          <p class="when">Dec 2023 – Apr 2024</p>
+          <h3>Embedded Software Engineer</h3>
+          <p class="org">FPT Software, Ho Chi Minh City</p>
+          <p class="d">Linux-based unit testing framework in Python and GDB for embedded C.</p>
+          <a class="readmore" href="#resume">Read more</a>
+        </div>
+      </article>
+      <article class="xcard">
+        <div class="mono-tile">BGSV</div>
+        <div>
+          <p class="when">Jan 2023 – Sep 2023</p>
+          <h3>Embedded Software Engineer</h3>
+          <p class="org">Bosch Global Software Technologies Vietnam</p>
+          <p class="d">C firmware for automotive keyless entry with BLE, UWB, CAN and K-Line.</p>
+          <a class="readmore" href="#resume">Read more</a>
+        </div>
+      </article>
+      <article class="xcard">
+        <div class="mono-tile">Lab</div>
+        <div>
+          <p class="when">Jun 2022 – Aug 2022</p>
+          <h3>Engineering Intern</h3>
+          <p class="org">Bosch Vietnam Automotive Lab</p>
+          <p class="d">CVT test-bench experiments and data analysis in LabVIEW.</p>
+          <a class="readmore" href="#resume">Read more</a>
+        </div>
+      </article>
+      <article class="xcard">
+        <div class="mono-tile">KSU</div>
+        <div>
+          <p class="when">Feb 2026 – present</p>
+          <h3>Graduate Research Assistant</h3>
+          <p class="org">Kennesaw State University</p>
+          <p class="d">Software fault localization and LiDAR point-cloud research.</p>
+          <a class="readmore" href="#resume">Read more</a>
+        </div>
+      </article>
+    </div>
+
+    <h2 class="sec">Projects</h2>
+    <div class="pgrid" id="home-projects"></div>
+    <div class="center"><a class="btn" href="#projects">All projects</a><a class="btn ghost" href="#resume">Resume</a></div>
+  </section>
+
+  <!-- RESUME -->
+  <section class="view" id="view-resume" hidden>
+    <h2 class="page-title">Resume</h2>
+    <div class="rs">
+      <h2>Education</h2>
+      <div class="item">
+        <div class="item-head"><h3>M.S., Software Engineering</h3><span class="when">Aug 2024 – Fall 2026</span></div>
+        <p class="org">Kennesaw State University, GPA 4.0 / 4.0</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>B.S., Automotive Engineering</h3><span class="when">Aug 2019 – Aug 2023</span></div>
+        <p class="org">Ho Chi Minh City University of Technology, GPA 3.55 / 4.0</p>
+      </div>
+
+      <h2>Experience</h2>
+      <div class="item">
+        <div class="item-head"><h3>Embedded Software Engineer</h3><span class="when">Dec 2023 – Apr 2024</span></div>
+        <p class="org">FPT Software, Ho Chi Minh City</p>
+        <ul class="pts">
+          <li>Designed a Linux-based unit testing framework in Python and GDB for embedded C applications, enabling automated debugging, repeatable validation and faster defect localization.</li>
+          <li>Audited an existing Perl-based test framework and documented it with MS Visio process flowcharts to improve traceability.</li>
+          <li>Delivered structured test reports in Excel (pivot tables, data validation, formula-based reporting) for Japanese development partners.</li>
+          <li>Worked in Agile Scrum sprints with JIRA and SVN.</li>
+        </ul>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Embedded Software Engineer</h3><span class="when">Jan 2023 – Sep 2023</span></div>
+        <p class="org">Bosch Global Software Technologies Vietnam</p>
+        <ul class="pts">
+          <li>Developed C firmware and communication drivers (CAN, BLE, UWB, K-Line) on STM32 and ESP32 for automotive keyless-entry systems.</li>
+          <li>Brought up and debugged boards with oscilloscopes, logic analyzers and multimeters, and found root causes in communication failures with CANoe, CAN Bus and UDS diagnostics.</li>
+          <li>Built Python test automation integrated with Jenkins CI and Git, reaching 90% automated test coverage.</li>
+          <li>Supported analysis of a Central Gateway system, gaining foundational AUTOSAR knowledge, and documented designs with PlantUML.</li>
+        </ul>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Engineering Intern</h3><span class="when">Jun 2022 – Aug 2022</span></div>
+        <p class="org">Bosch Vietnam Automotive Lab</p>
+        <ul class="pts">
+          <li>Ran continuously variable transmission (CVT) test-bench experiments in LabVIEW, setting up rigs and collecting repeatable data.</li>
+          <li>Analyzed efficiency, torque and dynamic behavior data to support the research team's design decisions.</li>
+        </ul>
+      </div>
+
+      <h2>Research</h2>
+      <div class="item">
+        <div class="item-head"><h3>Graduate Research Assistant, LiDAR point clouds</h3><span class="when">Aug 2026 – present</span></div>
+        <p class="org">Kennesaw State University</p>
+        <ul class="pts">
+          <li>Developed a Python pipeline that detects humans and classifies vehicles in LiDAR point-cloud data.</li>
+        </ul>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Graduate Research Assistant, DeepFL</h3><span class="when">Feb 2026 – Aug 2026</span></div>
+        <p class="org">Kennesaw State University</p>
+        <ul class="pts">
+          <li>Researched fault localization for Python programs, combining spectrum, mutation, textual-similarity and complexity signals at the method level.</li>
+        </ul>
+      </div>
+      
+
+      <h2>Skills</h2>
+      <div class="skills">
+        <div><h3>Languages</h3><p>C, C++, Python, Java</p></div>
+        <div><h3>Embedded</h3><p>STM32, ESP32, ARM Cortex-M, bare-metal firmware, board bring-up</p></div>
+        <div><h3>Interfaces</h3><p>CAN, BLE, UWB, K-Line, RS-485, UART, SPI, I2C, Wi-Fi</p></div>
+        <div><h3>Debug and lab</h3><p>Oscilloscope, logic analyzer, multimeter, GDB, CANoe, LabVIEW</p></div>
+        <div><h3>Research</h3><p>Fault localization, LiDAR point-cloud processing, Python tooling</p></div>
+        <div><h3>Process and tools</h3><p>Git, SVN, JIRA, Jenkins CI, PlantUML, Agile Scrum, AUTOSAR fundamentals</p></div>
+      </div>
+
+      <h2>Awards</h2>
+      <ul class="pts">
+        <li>First Prize, 2023 ESA Vehicle Demonstration Contest, Bosch Global Software Technologies Vietnam.</li>
+        <li>Certificate of Merit for academic performance, Faculty of Transportation Engineering.</li>
+        <li>Good Paper Presentation, 11th Symposium for Young Scientists on Transportation Engineering.</li>
+        <li>Self-directed study: Mastering Microcontroller and Embedded Driver Development (Udemy).</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="view" id="view-projects" hidden>
+    <h2 class="page-title">Projects</h2>
+    <p class="lead">Student team, research and industry work. Select a project for details.</p>
+    <div class="pgrid" id="all-projects" style="margin-top:36px"></div>
+  </section>
+
+  <!-- PROJECT DETAIL -->
+  <section class="view" id="view-detail" hidden>
+    <a class="back" href="#projects">&larr; All projects</a>
+    <div class="detail" id="detail-body"></div>
+  </section>
+
+  <!-- ABOUT + CONTACT -->
+  <section class="view" id="view-about" hidden>
+    <h2 class="page-title">About &amp; Contact</h2>
+    <div class="about" style="margin-top:36px">
+      <div>
+        <h3 class="sub-h">About me</h3>
+        <p>I started in automotive engineering at Ho Chi Minh City University of Technology, where I led a team that built a four-wheel-drive, four-wheel-steer electric vehicle. That project led me into embedded software, and I went on to write firmware and test tooling at Bosch and FPT Software.</p>
+        <p>I am now an M.S. student in Software Engineering at Kennesaw State University, working as a graduate research assistant on fault localization and LiDAR point-cloud detection.</p>
+        <p>I enjoy the hardware-facing side of software: bringing up boards, debugging communication buses and building the test tooling that makes firmware dependable.</p>
+        <h3 class="sub-h" style="margin-top:28px">Interests</h3>
+        <ul class="pts">
+          <li>Cyber-physical and automotive systems</li>
+          <li>Real-time communication networks</li>
+          <li>Embedded firmware and hardware bring-up</li>
+          <li>Test automation and debugging</li>
+        </ul>
+      </div>
+      <aside class="panel">
+        <h2>Contact</h2>
+        <p style="margin:0">The best way to reach me is by email.</p>
+        <div class="contact-row">
+          <span class="email" id="email-text">hau.lengoc01@gmail.com</span>
+          <button class="btn ghost" type="button" id="copy-email">Copy email</button>
+        </div>
+        <ul class="links">
+          <li><a href="https://www.linkedin.com/in/haulebk0206/" target="_blank" rel="noopener">LinkedIn: linkedin.com/in/haulebk0206</a></li>
+          <li><a href="https://github.com/Hau195" target="_blank" rel="noopener">GitHub: github.com/Hau195</a></li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+  </main>
+
+  <footer>
+    <span>Hau Le, Georgia, USA</span>
+    <span>Embedded systems</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  /* ---------- helpers for generated project art ---------- */
+  function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function wrap(label, inner) { return '<svg viewBox="0 0 400 240" role="img" aria-label="' + label + '" preserveAspectRatio="xMidYMid slice"><rect class="bg" width="400" height="240"/>' + inner + '</svg>'; }
+  function flow(label, items) {
+    var w = 80, g = 20, x0 = (400 - (items.length * w + (items.length - 1) * g)) / 2, y = 98, h = 44, s = '';
+    items.forEach(function (it, i) {
+      var x = x0 + i * (w + g);
+      s += '<rect class="box" x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="6"/>';
+      s += '<text class="t" x="' + (x + w / 2) + '" y="' + (y + 19) + '" text-anchor="middle">' + it[0] + '</text>';
+      s += '<text class="tm" x="' + (x + w / 2) + '" y="' + (y + 33) + '" text-anchor="middle">' + it[1] + '</text>';
+      if (i < items.length - 1) s += '<path class="ac" d="M' + (x + w + 3) + ' ' + (y + h / 2) + ' H' + (x + w + g - 3) + ' m-5 -4 l5 4 l-5 4"/>';
+    });
+    return wrap(label, s);
+  }
+  var art = {};
+  var photo = {};
+  photo.ev = '<img class="top" src="img/vehicle.jpg" alt="Top view of the 4WD-4WS electric vehicle prototype with four wheels, suspension and controller boards">';
+  photo.lidar = '<img src="img/pointcloud.jpg" alt="Colored LiDAR point cloud of a park with trees, cars and people segmented by class">';
+  art.ev = wrap('Diagram of a four-wheel vehicle with an ESP32 node, RS-485 links to four wheel controllers and a Wi-Fi link to a laptop',
+    '<rect class="box" x="150" y="40" width="100" height="160" rx="18"/>' +
+    '<rect class="fa" x="132" y="55" width="16" height="36" rx="4" opacity=".75"/><rect class="fa" x="252" y="55" width="16" height="36" rx="4" opacity=".75"/>' +
+    '<rect class="fa" x="132" y="149" width="16" height="36" rx="4" opacity=".75"/><rect class="fa" x="252" y="149" width="16" height="36" rx="4" opacity=".75"/>' +
+    '<path class="acd" d="M172 112 H160 V73 H150 M228 112 H240 V73 H250 M172 128 H160 V167 H150 M228 128 H240 V167 H250"/>' +
+    '<rect class="fa" x="172" y="105" width="56" height="30" rx="5"/><text class="ti" x="200" y="124" text-anchor="middle">ESP32</text>' +
+    '<text class="tm" x="200" y="158" text-anchor="middle">RS-485 bus</text>' +
+    '<path class="ac" d="M188 28 Q200 18 212 28 M181 21 Q200 4 219 21"/>' +
+    '<path class="acd" d="M222 20 L300 46"/><rect class="box" x="300" y="34" width="68" height="44" rx="5"/><text class="t" x="334" y="60" text-anchor="middle">laptop</text>' +
+    '<text class="tm" x="262" y="18" text-anchor="middle">Wi-Fi</text>');
+  art.deepfl = (function () {
+    var s = '', cols = ['SBFL', 'MBFL', 'TXT', 'CX'], op = [[.95,.4,.7,.2],[.8,.6,.3,.5],[.5,.9,.4,.3],[.3,.35,.85,.6],[.2,.25,.3,.9],[.15,.2,.25,.4]];
+    cols.forEach(function (c, i) { s += '<text class="tm" x="' + (57 + i * 40) + '" y="38" text-anchor="middle">' + c + '</text>'; });
+    op.forEach(function (row, j) { row.forEach(function (v, i) { s += '<rect class="fa" x="' + (40 + i * 40) + '" y="' + (50 + j * 26) + '" width="34" height="20" rx="3" opacity="' + v + '"/>'; }); });
+    s += '<path class="ac" d="M214 120 H240 m-6 -5 l6 5 l-6 5"/><text class="tm" x="320" y="38" text-anchor="middle">ranked methods</text>';
+    [110, 92, 70, 55, 38, 24].forEach(function (w, j) { s += '<rect class="fa" x="252" y="' + (50 + j * 26) + '" width="' + w + '" height="20" rx="3" opacity="' + (0.95 - j * 0.12) + '"/><text class="tm" x="' + (252 + w + 6) + '" y="' + (64 + j * 26) + '">#' + (j + 1) + '</text>'; });
+    return wrap('Matrix of per-method fault-localization signals feeding a ranked list of suspicious methods', s);
+  })();
+  art.lidar = (function () {
+    var r = rng(7), s = '', i, x, y;
+    for (i = 0; i < 240; i++) { x = 10 + r() * 380; y = 188 + r() * 34; s += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="1.4" fill="var(--line-strong)"/>'; }
+    for (i = 0; i < 46; i++) { x = 130 + (r() - .5) * 18; y = 108 + r() * 80; s += '<circle class="fa" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="1.7"/>'; }
+    for (i = 0; i < 110; i++) { x = 222 + r() * 106; y = 146 + r() * 42; s += '<circle class="fa" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="1.7"/>'; }
+    s += '<rect class="ac" x="112" y="100" width="38" height="92" rx="3"/><text class="t" x="131" y="92" text-anchor="middle">person</text>';
+    s += '<rect class="ac" x="214" y="138" width="122" height="54" rx="3"/><text class="t" x="275" y="130" text-anchor="middle">vehicle</text>';
+    return wrap('Point cloud with a detected person and a classified vehicle drawn as bounding boxes', s);
+  })();
+  art.keyless = flow('Flow from key fob over BLE and UWB to a vehicle ECU and a CAN gateway', [['Key / phone', 'BLE + UWB'], ['Vehicle ECU', 'STM32 / ESP32'], ['CAN bus', 'K-Line'], ['Gateway', 'AUTOSAR']]);
+  art.fpt = flow('Flow from embedded C code through a Python test runner and GDB to a report', [['Embedded C', 'unit under test'], ['Python', 'test runner'], ['GDB', 'automation'], ['Report', 'defect location']]);
+  art.ml = (function () {
+    var r = rng(21), s = '', i, x, y;
+    function g() { return (r() + r() + r() - 1.5) / 1.5; }
+    for (i = 0; i < 46; i++) { x = 130 + g() * 62; y = 110 + g() * 62; s += '<circle class="fa" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="3.2" opacity=".85"/>'; }
+    for (i = 0; i < 46; i++) { x = 275 + g() * 62; y = 130 + g() * 62; s += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="3.2" fill="var(--art-2)" opacity=".85"/>'; }
+    s += '<path class="acd" style="stroke:var(--muted)" d="M205 24 C178 90 232 150 202 218"/><text class="tm" x="203" y="236" text-anchor="middle">decision boundary</text>';
+    return wrap('Two clusters of points separated by a curved decision boundary', s);
+  })();
+
+  var projects = [
+    { id: 'ev', cat: 'Student team', title: '4WD-4WS Electric Vehicle', when: 'Aug 2022 – Jun 2023', org: 'Ho Chi Minh City University of Technology, team of 5 (team lead)',
+      short: 'A working four-wheel-drive, four-wheel-steer prototype with a distributed controller network.',
+      body: ['Owned the embedded software, communication architecture and system integration of a working four-wheel-drive, four-wheel-steer vehicle, from design through validation.',
+        'Designed an RS-485 network across distributed wheel controllers for scalable, fault-tolerant, deterministic real-time messaging.',
+        'Built Wi-Fi remote control and telemetry on an ESP32: the vehicle is driven from a handheld controller and streams live data to a laptop for analysis.',
+        'Programmed drive-by-wire and steer-by-wire control, validated with hardware-in-the-loop testing, and debugged controller boards with an oscilloscope and logic analyzer.'],
+      tags: ['ESP32', 'RS-485', 'Wi-Fi', 'HIL testing', 'cyber-physical system'] },
+    { id: 'deepfl', cat: 'Research', title: 'DeepFL Fault Localization', when: 'Aug 2024 – present', org: 'Kennesaw State University',
+      short: 'Combining spectrum, mutation, similarity and complexity signals to rank faulty methods.',
+      body: ['Researched fault localization for Python programs by combining several fault-diagnosis signals at the method level.',
+        'Signals include spectrum-based scores (Ochiai, Tarantula, Jaccard, SBI), mutation-based analysis, TF-IDF textual similarity between failing tests and code, and complexity metrics (cyclomatic, Maintainability Index, Halstead).',
+        'Worked on a Python framework with adapter and exporter plugins, caching and structured logging that turns pytest and coverage runs into ranked, method-level suspiciousness matrices.'],
+      tags: ['Python', 'pytest', 'coverage', 'mutation testing', 'BugsInPy'] },
+    { id: 'lidar', cat: 'Research', title: 'LiDAR Human Detection', when: 'Kennesaw State University', org: 'Graduate research assistantship',
+      short: 'A Python pipeline that detects humans and classifies vehicles in point clouds.',
+      body: ['Developed a Python pipeline that detects humans and classifies vehicles in LiDAR point-cloud data.'],
+      tags: ['Python', 'LiDAR', 'point clouds'] },
+    { id: 'keyless', cat: 'Industry', title: 'Automotive Keyless-Entry Firmware', when: 'Jan 2023 – Sep 2023', org: 'Bosch Global Software Technologies Vietnam',
+      short: 'C firmware and drivers with BLE, UWB, CAN and K-Line on STM32 and ESP32.',
+      body: ['<strong>Context.</strong> Embedded software engineer at Bosch Global Software Technologies Vietnam, working on automotive keyless-entry systems, where a phone or key communicates wirelessly with the vehicle to grant access.',
+        '<strong>Firmware.</strong> Wrote C firmware and communication drivers on STM32 and ESP32 for the wireless links (BLE, UWB) and the in-vehicle buses (CAN, K-Line), so the same product logic could talk to both the key side and the vehicle network.',
+        '<strong>Hardware bring-up.</strong> Brought up new boards and debugged them on the bench with an oscilloscope, logic analyzer and multimeter, checking signals and bus timing directly instead of guessing from software logs.',
+        '<strong>Root-cause analysis.</strong> Traced communication failures to their cause using CANoe, CAN bus traces and UDS diagnostics, separating hardware, driver and protocol problems.',
+        '<strong>Test automation.</strong> Built Python test automation integrated with Jenkins CI and Git, reaching 90% automated test coverage so regressions showed up on every change.',
+        '<strong>System context.</strong> Supported analysis of a Central Gateway system, which gave me foundational AUTOSAR knowledge, and documented designs with PlantUML diagrams.'],
+      tags: ['C', 'STM32', 'ESP32', 'CAN', 'BLE', 'UWB', 'Jenkins'] },
+    { id: 'fpt', cat: 'Industry', title: 'Linux Test Framework', when: 'Dec 2023 – Apr 2024', org: 'FPT Software, Ho Chi Minh City',
+      short: 'Automated unit testing and debugging for embedded C with Python and GDB.',
+      body: ['<strong>Context.</strong> Embedded software engineer at FPT Software (Ho Chi Minh City) on a project for Japanese development partners, working in Agile Scrum sprints with JIRA and SVN.',
+        '<strong>The framework.</strong> Designed a Linux-based unit testing framework in Python and GDB for embedded C applications. Python drives the test runs and GDB inspects the C code under test, which makes debugging automated and validation repeatable instead of manual.',
+        '<strong>Faster defect localization.</strong> Because tests run the same way every time, a failing case points to the function and state that failed, which shortens the path from a failure to its cause.',
+        '<strong>Legacy audit.</strong> Audited the existing Perl-based test framework and documented how it worked with MS Visio process flowcharts, improving traceability for the team.',
+        '<strong>Reporting.</strong> Delivered structured test reports in Excel (pivot tables, data validation, formula-based reporting) for the Japanese development partners.'],
+      tags: ['Python', 'GDB', 'Linux', 'embedded C'] }
+  ];
+
+  function card(p) {
+    return '<a class="pcard" href="#project-' + p.id + '"><div class="art">' + art[p.id] + '</div><div class="body"><p class="cat">' + p.cat + '</p><h3>' + p.title + '</h3><p class="s">' + p.short + '</p></div></a>';
+  }
+  document.getElementById('home-projects').innerHTML = projects.slice(0, 3).map(card).join('');
+  document.getElementById('all-projects').innerHTML = projects.map(card).join('');
+
+  function detail(p) {
+    return '<div class="detail-art art">' + (photo[p.id] || art[p.id]) + '</div><div><p class="cat">' + p.cat + '</p><h1>' + p.title + '</h1><p class="meta">' + p.when + ' · ' + p.org + '</p><ul class="pts">' +
+      p.body.map(function (b) { return '<li>' + b + '</li>'; }).join('') + '</ul><ul class="tags">' + p.tags.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul>' +
+      (p.link ? '<p style="margin-top:18px"><a href="' + p.link[0] + '" target="_blank" rel="noopener">' + p.link[1] + '</a></p>' : '') + '</div>';
+  }
+
+  /* ---------- router ---------- */
+  var views = ['home', 'resume', 'projects', 'about'];
+  var nav = document.getElementById('nav'), menuBtn = document.getElementById('menu-btn');
+  function show() {
+    var h = (location.hash || '#home').slice(1), active = 'home', id;
+    document.querySelectorAll('.view').forEach(function (v) { v.hidden = true; });
+    if (h.indexOf('project-') === 0) {
+      id = h.slice(8);
+      var p = projects.filter(function (x) { return x.id === id; })[0];
+      if (p) { document.getElementById('detail-body').innerHTML = detail(p); document.getElementById('view-detail').hidden = false; active = 'projects'; }
+      else { document.getElementById('view-projects').hidden = false; active = 'projects'; }
+    } else if (views.indexOf(h) >= 0) { document.getElementById('view-' + h).hidden = false; active = h; }
+    else { document.getElementById('view-home').hidden = false; }
+    nav.querySelectorAll('a').forEach(function (a) { if (a.getAttribute('data-view') === active) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+    nav.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false');
+  }
+  window.addEventListener('hashchange', function () { show(); window.scrollTo(0, 0); });
+  show();
+  menuBtn.addEventListener('click', function () { var o = nav.classList.toggle('open'); menuBtn.setAttribute('aria-expanded', o ? 'true' : 'false'); });
+
+  /* ---------- copy email ---------- */
+  var btn = document.getElementById('copy-email'), text = document.getElementById('email-text');
+  btn.addEventListener('click', function () {
+    function fallback() { var r = document.createRange(); r.selectNodeContents(text); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = 'Email selected'; }
+    try { navigator.clipboard.writeText(text.textContent.trim()).then(function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy email'; }, 1800); }, fallback); } catch (e) { fallback(); }
+  });
+})();
+</script>
+
+</body></html>
